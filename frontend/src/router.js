@@ -7,10 +7,13 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+
+
     {
       path: '/',
       component: () => import('@/views/dashboard/Index'),
       children: [
+
 
         // Login
         {
@@ -24,6 +27,13 @@ export default new Router({
           name: 'Register',
           path: '/register',
           component: () => import('@/views/auth/Register'),
+        },
+
+        // Forget Password
+        {
+          name: 'ForgetPassword',
+          path: '/ForgetPassword',
+          component: () => import('@/views/auth/ForgetPassword'),
         },
 
         // Dashboard

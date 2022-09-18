@@ -13,6 +13,7 @@ const theme = {
 }
 
 export default new Vuetify({
+  rtl:true,
   lang: {
     t: (key, ...params) => i18n.t(key, params),
   },
