@@ -2,20 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
+use App\Repositories\AuthRepository;
 use Illuminate\Http\JsonResponse;
+
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
+     * @var AuthRepository
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
+    private AuthRepository $RegisterRepo;
 
     /**
+     * Create a new AuthController instance.
+     *
+     * @param AuthRepository $repo
+     */
+    public function __construct(AuthRepository $repo)
+    {
+        $this->RegisterRepo = $repo;
+        $this->middleware('auth:api', ['except' => ['login' , 'register']]);
+    }
+
+
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        $request->safe()->all();
+        $this->RegisterRepo->create($request->name, $request->email, $request->password);
+        return $this->login($request);
+    }
+
+    /*
      * Get a JWT via given credentials.
      *
      * @return JsonResponse
@@ -24,7 +41,7 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
