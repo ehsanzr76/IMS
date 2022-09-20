@@ -7,12 +7,14 @@
             <v-toolbar-title>ورود به حساب کاربری</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-form>
+            <v-form @submit.prevent="login">
 
               <v-text-field
                 label="ایمیل"
                 name="email"
                 type="email"
+                v-model="form.email"
+                required
                 prepend-inner-icon="mdi-email"
                 outlined
                 rounded
@@ -23,6 +25,8 @@
                 label="رمز عبور"
                 name="password"
                 type="password"
+                v-model="form.password"
+                required
                 prepend-inner-icon="mdi-lock"
                 outlined
                 rounded
@@ -48,15 +52,15 @@
               </span>
                 </router-link>
               </v-col>
-
+              <v-card-actions class="justify-center">
+                <v-btn color="primary" outlined dark style="font-size: large" class="mb-5"
+                       @click.prevent="SendLoginRequest">
+                  <span class="px-10">ورود</span>
+                </v-btn>
+              </v-card-actions>
             </v-form>
           </v-card-text>
-          <v-card-actions class="justify-center">
-            <v-btn color="primary" outlined dark style="font-size: large" class="mb-5">
-              <span class="px-10">ورود</span>
 
-            </v-btn>
-          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -64,9 +68,28 @@
 </template>
 
 <script>
+
 export default {
-  name: "Login",
+  name: "login",
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null,
+      }
+    }
+  },
+methods:{
+  SendLoginRequest(){
+    axios.post('http://localhost/api/auth/login' , this.form)
+    .then(res=>{
+      this.$router.push('/');
+    })
+  }
 }
+}
+
+
 </script>
 
 <style scoped>
