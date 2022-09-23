@@ -14,6 +14,8 @@
                 name="email"
                 type="email"
                 v-model="form.email"
+                :error="errors.email"
+                :error-messages="errors.email"
                 required
                 prepend-inner-icon="mdi-email"
                 outlined
@@ -26,6 +28,8 @@
                 name="password"
                 type="password"
                 v-model="form.password"
+                :error="errors.password"
+                :error-messages="errors.password"
                 required
                 prepend-inner-icon="mdi-lock"
                 outlined
@@ -76,7 +80,8 @@ export default {
       form: {
         email: null,
         password: null,
-      }
+      },
+      errors:{}
     }
   },
   methods: {
@@ -88,7 +93,11 @@ export default {
             title: '.ورود با موفقیت انجام شد'
           })
           this.$router.push('/');
-        }).catch(err => this.errors = err.response.data.errors)
+        }).catch(err => {
+        if (err.response.status === 422) {
+          this.errors = err.response.data.errors;
+        }
+      })
         .catch(
           Toast.fire({
             icon: 'warning',

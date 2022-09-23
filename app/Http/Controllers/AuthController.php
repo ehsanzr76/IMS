@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repositories\AuthRepository;
 use Illuminate\Http\JsonResponse;
@@ -37,8 +38,9 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function login(): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
+        $request->safe()->all();
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
