@@ -79,14 +79,24 @@ export default {
       }
     }
   },
-methods:{
-  SendLoginRequest(){
-    axios.post('http://localhost/api/auth/login' , this.form)
-    .then(res=>{
-      this.$router.push('/');
-    })
+  methods: {
+    SendLoginRequest() {
+      axios.post('http://localhost/api/auth/login', this.form)
+        .then(res => {
+          Toast.fire({
+            icon: 'success',
+            title: '.ورود با موفقیت انجام شد'
+          })
+          this.$router.push('/');
+        }).catch(err => this.errors = err.response.data.errors)
+        .catch(
+          Toast.fire({
+            icon: 'warning',
+            title: '.ایمیل یا رمز عبور نادرست است'
+          })
+        )
+    }
   }
-}
 }
 
 

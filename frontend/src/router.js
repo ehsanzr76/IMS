@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Register from "@/views/auth/Register";
+import Dashboard from "@/views/dashboard/Dashboard";
+import Login from "@/views/auth/Login";
 
 Vue.use(Router)
 
-export default new Router({
+
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
 
 
     {
+      name: 'Home',
       path: '/',
       component: () => import('@/views/dashboard/Index'),
       children: [
@@ -19,15 +24,22 @@ export default new Router({
         {
           name: 'Login',
           path: '/login',
-          component: () => import('@/views/auth/Login'),
+          // meta:{
+          //   requiresAuth:true
+          // },
+          component: () => import("@/views/auth/Login"),
         },
 
         // Register
         {
           name: 'Register',
           path: '/register',
-          component: () => import('@/views/auth/Register'),
+          // meta:{
+          //   requiresAuth:true
+          // },
+          component: () =>  import('@/views/auth/Register'),
         },
+
 
         // Forget Password
         {
@@ -85,4 +97,19 @@ export default new Router({
       ],
     },
   ],
-})
+});
+// router.beforeEach((to , from , next)=>{
+//   if (to.meta.requiresAuth){
+//     if (axios.post('http://localhost/api/auth/login')){
+//       next({
+//         name:"Dashboard"
+//       });
+//     }else {
+//       next();
+//     }
+//
+//   }else {
+//     next();
+//   }
+// })
+export default router;
