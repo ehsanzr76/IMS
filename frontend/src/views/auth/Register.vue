@@ -70,6 +70,8 @@
   </v-container>
 </template>
 <script>
+import store from "@/store";
+
 export default {
   name: "register",
   data() {

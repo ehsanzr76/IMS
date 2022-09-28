@@ -73,6 +73,8 @@
 
 <script>
 
+import store from "@/store";
+
 export default {
   name: "login",
   data() {
@@ -81,26 +83,27 @@ export default {
         email: null,
         password: null,
       },
-      errors:{}
+      errors: {}
     }
   },
   methods: {
     SendLoginRequest() {
       axios.post('http://localhost/api/auth/login', this.form)
         .then(res => {
+          store.commit('loginUser')
+          localStorage.setItem('token', res.data.access_token)
+          this.$router.push('/');
           Toast.fire({
             icon: 'success',
             title: '.ورود با موفقیت انجام شد'
           })
-          this.$router.push('/');
         }).catch(err => {
         if (err.response.status === 422) {
           this.errors = err.response.data.errors;
         }
-      })
-        .catch(
+      }).catch(
           Toast.fire({
-            icon: 'warning',
+            icon: 'error',
             title: '.ایمیل یا رمز عبور نادرست است'
           })
         )

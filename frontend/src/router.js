@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Register from "@/views/auth/Register";
 import Dashboard from "@/views/dashboard/Dashboard";
 import Login from "@/views/auth/Login";
+import store from "@/store";
 
 Vue.use(Router)
 
@@ -24,9 +25,6 @@ const router = new Router({
         {
           name: 'Login',
           path: '/login',
-          // meta:{
-          //   requiresAuth:true
-          // },
           component: () => import("@/views/auth/Login"),
         },
 
@@ -34,10 +32,14 @@ const router = new Router({
         {
           name: 'Register',
           path: '/register',
-          // meta:{
-          //   requiresAuth:true
-          // },
           component: () =>  import('@/views/auth/Register'),
+        },
+
+        // Logout
+        {
+          name: 'Logout',
+          path: '/logout',
+          component: () =>  import("@/views/auth/Logout"),
         },
 
 
@@ -50,66 +52,47 @@ const router = new Router({
 
         // Dashboard
         {
-          name: 'Dashboard',
+          name: 'داشبورد',
           path: '',
+          meta:{
+            requiresAuth:true ////user should be login
+          },
           component: () => import('@/views/dashboard/Dashboard'),
         },
 
         // Pages
         {
-          name: 'User Profile',
-          path: 'pages/user',
+          name: 'Users',
+          path: 'users',
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
+
+        //Employee
         {
-          name: 'Notifications',
-          path: 'components/notifications',
-          component: () => import('@/views/dashboard/component/Notifications'),
+          name: 'کارمندان',
+          path: '/employees',
+          component: () => import("@/views/employee/Employees"),
         },
-        {
-          name: 'Icons',
-          path: 'components/icons',
-          component: () => import('@/views/dashboard/component/Icons'),
-        },
-        {
-          name: 'Typography',
-          path: 'components/typography',
-          component: () => import('@/views/dashboard/component/Typography'),
-        },
-        // Tables
-        {
-          name: 'Regular Tables',
-          path: 'tables/regular-tables',
-          component: () => import('@/views/dashboard/tables/RegularTables'),
-        },
-        // Maps
-        {
-          name: 'Google Maps',
-          path: 'maps/google-maps',
-          component: () => import('@/views/dashboard/maps/GoogleMaps'),
-        },
-        // Upgrade
-        {
-          name: 'Upgrade',
-          path: 'upgrade',
-          component: () => import('@/views/dashboard/Upgrade'),
-        },
+
       ],
     },
   ],
 });
-// router.beforeEach((to , from , next)=>{
-//   if (to.meta.requiresAuth){
-//     if (axios.post('http://localhost/api/auth/login')){
-//       next({
-//         name:"Dashboard"
-//       });
-//     }else {
-//       next();
-//     }
-//
-//   }else {
-//     next();
-//   }
-// })
+router.beforeEach((to, from, next) => {
+
+  // check if the route requires authentication and user is not logged in
+  if (to.matched.some(route => route.meta.requiresAuth) && !store.state.isLoggedIn) {
+    // redirect to login page
+    next({ name: 'Login' })
+    return
+  }
+
+  // if logged in redirect to dashboard
+  if(to.path === '/login' && store.state.isLoggedIn) {
+    next({ name: 'Dashboard' })
+    return
+  }
+
+  next()
+})
 export default router;

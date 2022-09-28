@@ -71,8 +71,8 @@
         />
       </template>
 
-      <!-- Style cascading bug  -->
-      <!-- https://github.com/vuetifyjs/vuetify/pull/8574 -->
+<!--       Style cascading bug-->
+<!--       https://github.com/vuetifyjs/vuetify/pull/8574-->
       <div />
     </v-list>
 
@@ -113,26 +113,26 @@
         },
         {
           icon: 'mdi-account',
-          title: 'user',
+          title: 'کاربران',
           to: '/pages/user',
         },
         {
-          title: 'rtables',
-          icon: 'mdi-clipboard-outline',
-          to: '/tables/regular-tables',
+          title: 'کارمندان',
+          icon: 'mdi-account-group',
+          to: '/employees',
         },
         {
-          title: 'typography',
-          icon: 'mdi-format-font',
+          title: 'فروشندگان',
+          icon: 'mdi-account-switch',
           to: '/components/typography',
         },
         {
-          title: 'icons',
+          title: 'آیکون ها',
           icon: 'mdi-chart-bubble',
           to: '/components/icons',
         },
         {
-          title: 'google',
+          title: 'نقشه',
           icon: 'mdi-map-marker',
           to: '/maps/google-maps',
         },
@@ -160,7 +160,7 @@
       profile () {
         return {
           avatar: true,
-          title: this.$t('avatar'),
+          title: 'پنل مدیریت انبار',
         }
       },
     },
