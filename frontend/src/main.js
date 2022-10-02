@@ -33,8 +33,10 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 
+
+
 //// Start SweetAlert
-window.Swal= Swal;
+window.Swal = Swal;
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
@@ -46,5 +48,55 @@ const Toast = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer)
   }
 });
-window.Toast= Toast;
+window.Toast = Toast;
 //// End SweetAlert
+
+
+
+/// Start Noty
+window.Noty = require('noty');
+class Notification{
+  success(){
+    new Noty({
+      type:'success',
+      layout:'topRight',
+      text:'با موفقیت انجام شد.',
+      timeout:1000,
+    }).show();
+  }
+
+
+  alert(){
+    new Noty({
+      type:'alert',
+      layout:'topRight',
+      text:'آیا مطمين هستید؟',
+      timeout:1000,
+    }).show();
+  }
+
+
+  error(){
+    new Noty({
+      type:'alert',
+      layout:'topRight',
+      text:'اشتباهی پیش آمده است',
+      timeout:1000,
+    }).show();
+  }
+
+
+  warning(){
+    new Noty({
+      type:'warning',
+      layout:'topRight',
+      text:'اخطار!اشتباهی پیش آمده است',
+      timeout:1000,
+    }).show();
+  }
+}
+export default Notification = new Notification()
+
+///End Noty
+
+

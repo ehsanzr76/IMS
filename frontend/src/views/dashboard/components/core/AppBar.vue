@@ -52,7 +52,7 @@
     </v-text-field>
 
     <div class="mx-3"/>
-    <v-btn outlined class="ml-3" color="black" rounded>
+    <v-btn outlined small class="ml-3" color="black">
 
       <router-link :to="{ name: 'Logout' }" class="text-decoration-none" style="color: black">خروج</router-link>
       <v-icon>mdi-logout</v-icon>

@@ -4,14 +4,9 @@
     fluid
     tag="section"
   >
-    <v-btn
-      v-show="!hidden"
-      color="secondary"
-      outlined
-    >
-      <span>کارمند جدید</span>
-      <v-icon>mdi-plus</v-icon>
-
+    <v-btn outlined class="ml-3" color="#8a2580">
+    <router-link to="create/employee" class="text-decoration-none" style="color: #8a2580">کارمند جدید</router-link>
+    <v-icon>mdi-plus</v-icon>
     </v-btn>
     <base-material-card
       icon="mdi-clipboard-text"

@@ -67,11 +67,18 @@ const router = new Router({
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
 
-        //Employee
+        //All Employees
         {
           name: 'کارمندان',
           path: '/employees',
           component: () => import("@/views/employee/Employees"),
+        },
+
+        //Create Employee
+        {
+          name: 'ایجاد کارمند',
+          path: '/create/employee',
+          component: () => import("@/views/employee/Create"),
         },
 
       ],
